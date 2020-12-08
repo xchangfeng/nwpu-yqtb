@@ -47,3 +47,13 @@
 最后在操作标签页里，也是新建一个操作。在程序或脚本里，选到nwpu_clock_in.exe的路径，然后在起始于框内填入nwpu_clock_in.exe所在路径，以便程序能找到name.json文件。
 
 ![image-20201208205440475](pic/image-20201208205440475.png)
+
+
+
+# 打包方法
+
+```shell
+pyinstaller -F -w nwpu_clock_in.py
+```
+
+同时，去除黑框的方法参考： https://www.cnblogs.com/it-tsz/p/10592151.html
