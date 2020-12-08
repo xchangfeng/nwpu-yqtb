@@ -106,6 +106,7 @@ sock.close()
 
 current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 logging.info(current_time + "完成疫情防控健康登记自动打卡一次" + " " +
+              "打卡学号:\t" + stu_number + " " +
               "电脑名称：\t" + hostname + " " +
               "打卡电脑IP：\t" + host_internet_ip)
 # 格式化成2016-03-20 11:45:39形式
@@ -114,6 +115,7 @@ if sckey != "":
     url = 'https://sc.ftqq.com/' + sckey + '.send'
     params = {"text": current_time + "nwpu-yqtb打卡一次",
               "desp": current_time + "完成疫情防控健康登记自动打卡一次" + "\n\n" +
+              "打卡学号：\t" + stu_number + "\n\n" +
               "电脑名称：\t" + hostname + "\n\n" +
               "打卡电脑IP：\t" + host_internet_ip}
     response = requests.get(url=url, params=params, headers=headers).text
