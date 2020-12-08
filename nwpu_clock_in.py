@@ -1,13 +1,18 @@
 import json
 from selenium import webdriver
 import time
+import socket
+import requests
+import logging
 data = []
 with open('name.json', 'r') as f:
     data = f.read()
 d = json.loads(data)
 stu_number = d['username']
 stu_password = d['password']
-# print(stu_number, stu_password)
+sckey = d['sckey']
+# print(stu_number, stu_password, sckey)
+# print(sckey == "")
 f.close()
 
 #西工大 参考：https://blog.csdn.net/wjl_zyl_1314/article/details/107036245
@@ -80,3 +85,36 @@ driver.find_element_by_partial_link_text('确认提交').click()
 time.sleep(2)
 # 关闭浏览器
 driver.close()
+
+logging.basicConfig(level=logging.DEBUG,#控制台打印的日志级别
+                    filename='clockin.log',
+                    filemode='a',##模式，有w和a，w就是写模式，每次都会重新写日志，覆盖之前的日志
+                    #a是追加模式，默认如果不写的话，就是追加模式
+                    format=
+                    '%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s'
+                    #日志格式
+                    )
+
+# 获取主机名
+hostname = socket.gethostname()
+# print(hostname)
+sock = socket.create_connection(('ns1.dnspod.net', 6666))
+# print("您的公网IP： {}".format(sock.recv(16).decode('utf-8')))
+host_internet_ip = sock.recv(16).decode('utf-8')
+# print(host_internet_ip)
+sock.close()
+
+current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+logging.info(current_time + "完成疫情防控健康登记自动打卡一次" + " " +
+              "电脑名称：\t" + hostname + " " +
+              "打卡电脑IP：\t" + host_internet_ip)
+# 格式化成2016-03-20 11:45:39形式
+if sckey != "":
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36"}
+    url = 'https://sc.ftqq.com/' + sckey + '.send'
+    params = {"text": current_time + "nwpu-yqtb打卡一次",
+              "desp": current_time + "完成疫情防控健康登记自动打卡一次" + "\n\n" +
+              "电脑名称：\t" + hostname + "\n\n" +
+              "打卡电脑IP：\t" + host_internet_ip}
+    response = requests.get(url=url, params=params, headers=headers).text
+    # print(response)
