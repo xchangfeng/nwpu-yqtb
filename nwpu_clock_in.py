@@ -58,7 +58,7 @@ try:
     # print(driver.find_elements_by_id)
     time.sleep(1)
     # 点击健康登记
-    driver.find_element_by_partial_link_text('健康登记').click()
+    driver.find_element_by_partial_link_text('每日填报').click()
 
     # 因为西工大会自动记录上一天的信息，所以不需要填报其他信息可直接提交
     '''
