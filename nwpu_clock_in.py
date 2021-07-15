@@ -101,8 +101,8 @@ try:
     driver.find_element_by_partial_link_text('提交填报信息').click()
     time.sleep(1)
     # 郑重承诺 /html/body/div[3]/form/div[6]/div[2]/div[25]/label/div[1]/i
-    # driver.find_element_by_class_name("weui-icon-checked").click()
-    driver.find_element_by_xpath('/html/body/div[3]/form/div[6]/div[2]/div[10]/label/div[1]/i').click()
+    # driver.find_element_by_class_name("weui-icon-checked").click() /html/body/div[3]/form/div[6]/div[2]/div[25]/label/div[1]
+    driver.find_element_by_xpath('/html/body/div[3]/form/div[6]/div[2]/div[25]/label/div[1]').click()
     # 确认提交
     driver.find_element_by_partial_link_text('确认提交').click()
     time.sleep(2)
